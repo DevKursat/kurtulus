@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KURTULUŞ — Teknolojiyle Aydınlanan Türkiye</title>
+    <meta name="description" content="Ne iktidar ne muhalefet. Türkiye'nin kurtuluşu veri, bilim ve teknolojide. 85 milyon için yapay zeka destekli, şeffaf ve adil yönetim vizyonu.">
+    
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://devkursat.github.io/kurtulus/">
+    <meta property="og:title" content="KURTULUŞ — Teknolojiyle Aydınlanan Türkiye">
+    <meta property="og:description" content="Ne iktidar ne muhalefet. Türkiye'nin gerçek kurtuluşu: Yapay zeka, blockchain ve açık veri ile yönetilen şeffaf, adil, güçlü bir gelecek.">
+    <meta property="og:image" content="https://devkursat.github.io/kurtulus/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇹🇷</text></svg>">
+
+    <style>
+        /* ===== CSS RESET & VARIABLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #06060b;
+            --bg-secondary: #0c0c14;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-tertiary: #55556a;
+            --red: #E30A17;
+            --red-glow: rgba(227, 10, 23, 0.3);
+            --blue: #00A1DE;
+            --blue-glow: rgba(0, 161, 222, 0.3);
+            --purple: #8B5CF6;
+            --green: #22c55e;
+            --gold: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #E30A17, #ff6b6b);
+            --gradient-secondary: linear-gradient(135deg, #00A1DE, #60efff);
+            --gradient-accent: linear-gradient(135deg, #8B5CF6, #c084fc);
+            --gradient-hero: linear-gradient(135deg, #E30A17, #8B5CF6, #00A1DE);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--red) var(--bg-primary);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--red);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--red);
+            border-radius: 3px;
+        }
+
+        /* ===== PRELOADER ===== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-logo {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 2s ease infinite;
+        }
+        .preloader-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+        .preloader-bar::after {
+            content: '';
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: var(--gradient-hero);
+            border-radius: 2px;
+            animation: preloaderSlide 1s ease infinite;
+        }
+
+        @keyframes preloaderSlide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+
+        /* ===== SCROLL PROGRESS ===== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-hero);
+            z-index: 9999;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px var(--red-glow);
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        nav.scrolled {
+            background: rgba(6, 6, 11, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.7rem 2rem;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: var(--gradient-primary) !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--red-glow);
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        /* Mobile nav */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 6px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        /* ===== CANVAS ===== */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== HERO SECTION ===== */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeUp 1s ease 0.5s forwards;
+        }
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 12vw, 10rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+        .hero-title .gradient-text {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.3s forwards;
+        }
+        .hero-statement {
+            font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+            color: var(--text-tertiary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.6s forwards;
+        }
+        .hero-statement em {
+            color: var(--red);
+            font-style: normal;
+            font-weight: 600;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.9s forwards;
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.2s forwards;
+        }
+        .hero-scroll span {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .scroll-indicator {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 12px;
+            position: relative;
+        }
+        .scroll-indicator::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 2px;
+            animation: scrollBounce 2s ease infinite;
+        }
+
+        /* Floating orbs behind hero */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .hero-orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--red);
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+        .hero-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--blue);
+            bottom: -10%;
+            left: -10%;
+            animation-delay: -7s;
+        }
+        .hero-orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--purple);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-body);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px var(--red-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px var(--red-glow);
+        }
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .btn .arrow {
+            transition: transform 0.3s ease;
+        }
+        .btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ===== SECTION BASE ===== */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 8rem 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--red);
+            border-radius: 2px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.8;
+        }
+
+        /* ===== ANIMATE ON SCROLL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+        .reveal-delay-6 { transition-delay: 0.6s; }
+
+        /* ===== VISION SECTION ===== */
+        #vision {
+            background: var(--bg-secondary);
+        }
+        .vision-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+        .vision-text .big-quote {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        .vision-text .big-quote .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .vision-text p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .vision-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(227, 10, 23, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(227, 10, 23, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PROBLEMS SECTION ===== */
+        #problems {
+            background: var(--bg-primary);
+        }
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+        .problem-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .problem-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .problem-card:hover::after {
+            transform: scaleX(1);
+        }
+        .problem-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(227, 10, 23, 0.15);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            background: var(--bg-card-hover);
+        }
+        .problem-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(227, 10, 23, 0.1);
+            border: 1px solid rgba(227, 10, 23, 0.15);
+        }
+        .problem-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .problem-card .problem-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(227, 10, 23, 0.1);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        .problem-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== SOLUTIONS SECTION ===== */
+        #solutions {
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+        .solutions-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .solutions-header .section-desc {
+            margin: 0 auto;
+        }
+        .solution-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 8rem;
+        }
+        .solution-item:nth-child(even) {
+            direction: rtl;
+        }
+        .solution-item:nth-child(even) > * {
+            direction: ltr;
+        }
+        .solution-item:last-child {
+            margin-bottom: 0;
+        }
+        .solution-content .solution-number {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 900;
+            background: var(--glass);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .solution-content h3 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .solution-content h3 .accent {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .solution-content p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .solution-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .solution-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        .solution-features li .check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .solution-visual {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 4/3;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .solution-visual-inner {
+            padding: 2rem;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .visual-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+        .visual-bars {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0 1rem;
+        }
+        .visual-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .visual-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .visual-bar-fill.red { background: var(--gradient-primary); }
+        .visual-bar-fill.blue { background: var(--gradient-secondary); }
+        .visual-bar-fill.purple { background: var(--gradient-accent); }
+        .visual-bar-fill.green { background: linear-gradient(135deg, #22c55e, #86efac); }
+        .visual-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 0.2rem;
+        }
+
+        /* Dashboard mockup */
+        .dashboard-mock {
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .dash-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .dash-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .dash-dots span:nth-child(1) { background: #ff5f57; }
+        .dash-dots span:nth-child(2) { background: #ffbd2e; }
+        .dash-dots span:nth-child(3) { background: #28ca41; }
+        .dash-mini-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .dash-mini-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+        }
+        .dash-mini-card .mini-value {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .dash-mini-card .mini-label {
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            margin-top: 0.25rem;
+        }
+        .dash-chart {
+            flex: 1;
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.4rem;
+        }
+        .chart-bar {
+            flex: 1;
+            background: var(--gradient-primary);
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+        .chart-bar:hover { opacity: 1; }
+
+        /* ===== ROADMAP SECTION ===== */
+        #roadmap {
+            background: var(--bg-primary);
+        }
+        .roadmap-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .roadmap-header .section-desc {
+            margin: 0 auto;
+        }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--red), var(--blue), var(--purple));
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+        .timeline-item:nth-child(odd) .timeline-content {
+            padding-right: 3rem;
+            padding-left: 0;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            padding-left: 3rem;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--red);
+            border: 3px solid var(--bg-primary);
+            z-index: 2;
+            box-shadow: 0 0 20px var(--red-glow);
+        }
+        .timeline-item:nth-child(2) .timeline-dot { background: var(--blue); box-shadow: 0 0 20px var(--blue-glow); }
+        .timeline-item:nth-child(3) .timeline-dot { background: var(--purple); box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+        .timeline-item:nth-child(4) .timeline-dot { background: var(--green); box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+        .timeline-item:nth-child(5) .timeline-dot { background: var(--gold); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+        .timeline-year {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-item:nth-child(2) .timeline-year { color: var(--blue); }
+        .timeline-item:nth-child(3) .timeline-year { color: var(--purple); }
+        .timeline-item:nth-child(4) .timeline-year { color: var(--green); }
+        .timeline-item:nth-child(5) .timeline-year { color: var(--gold); }
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== TECH SECTION ===== */
+        #tech {
+            background: var(--bg-secondary);
+        }
+        .tech-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .tech-header .section-desc {
+            margin: 0 auto;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .tech-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, rgba(227, 10, 23, 0.3), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .tech-card:hover::before {
+            opacity: 1;
+        }
+        .tech-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        .tech-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .tech-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ===== CTA SECTION ===== */
+        #cta {
+            background: var(--bg-primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(227, 10, 23, 0.08) 0%, transparent 70%);
+        }
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+        }
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        .cta-title .gradient-text {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+        }
+        .cta-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+        .cta-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            border-color: var(--red);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* ===== MANIFESTO BANNER ===== */
+        .manifesto-banner {
+            background: linear-gradient(135deg, rgba(227, 10, 23, 0.08), rgba(0, 161, 222, 0.08));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 4rem 3rem;
+            text-align: center;
+            margin-top: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .manifesto-banner::before {
+            content: '"';
+            font-family: Georgia, serif;
+            font-size: 15rem;
+            position: absolute;
+            top: -3rem;
+            left: 2rem;
+            color: rgba(227, 10, 23, 0.08);
+            line-height: 1;
+        }
+        .manifesto-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .manifesto-text .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .manifesto-author {
+            margin-top: 1.5rem;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-text {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--red);
+        }
+
+        /* ===== KEYFRAMES ===== */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroReveal {
+            from { opacity: 0; transform: translateY(60px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(-30px, -10px) scale(1.02); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes counter-fill {
+            from { width: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                position: fixed;
+                inset: 0;
+                background: rgba(6, 6, 11, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .nav-links.open {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                font-size: 1.3rem;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .vision-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .solution-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .solution-item:nth-child(even) {
+                direction: ltr;
+            }
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline::before {
+                left: 0;
+            }
+            .timeline-dot {
+                left: 0;
+            }
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+                text-align: left;
+                padding-left: 2rem;
+            }
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            section {
+                padding: 5rem 1.5rem;
+            }
+            .manifesto-banner {
+                padding: 3rem 1.5rem;
+            }
+            .dash-mini-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .vision-stats {
+                grid-template-columns: 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== GLITCH EFFECT ===== */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            background: var(--bg-primary);
+            clip-path: inset(0);
+        }
+        .glitch::before {
+            animation: glitch-1 2s infinite linear alternate-reverse;
+            color: var(--red);
+            z-index: -1;
+        }
+        .glitch::after {
+            animation: glitch-2 3s infinite linear alternate-reverse;
+            color: var(--blue);
+            z-index: -2;
+        }
+        @keyframes glitch-1 {
+            0% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 0); }
+            20% { clip-path: inset(50% 0 20% 0); transform: translate(3px, 0); }
+            40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+            80% { clip-path: inset(30% 0 40% 0); transform: translate(-1px, 0); }
+            100% { clip-path: inset(60% 0 10% 0); transform: translate(1px, 0); }
+        }
+        @keyframes glitch-2 {
+            0% { clip-path: inset(60% 0 20% 0); transform: translate(3px, 0); }
+            20% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+            40% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+            60% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
+            80% { clip-path: inset(70% 0 10% 0); transform: translate(1px, 0); }
+            100% { clip-path: inset(40% 0 30% 0); transform: translate(-1px, 0); }
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            overflow: hidden;
+            padding: 2rem 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 1;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+        .marquee-item {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .marquee-item .sep {
+            width: 6px;
+            height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-logo">KURTULUŞ</div>
+        <div class="preloader-bar"></div>
+    </div>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scroll-progress"></div>
+
+    <!-- PARTICLES -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">KURTULUŞ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#vision">Vizyon</a></li>
+            <li><a href="#problems">Sorunlar</a></li>
+            <li><a href="#solutions">Çözümler</a></li>
+            <li><a href="#roadmap">Yol Haritası</a></li>
+            <li><a href="#tech">Teknoloji</a></li>
+            <li><a href="#cta" class="nav-cta">Katıl</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Menü">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Yapay Zeka Destekli Yönetim Vizyonu
+        </div>
+
+        <h1 class="hero-title">
+            <span class="gradient-text glitch" data-text="KURTULUŞ">KURTULUŞ</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Teknolojiyle aydınlanan, veriyle yönetilen,<br>
+            85 milyon için adil bir Türkiye.
+        </p>
+
+        <p class="hero-statement">
+            Ne iktidar ne muhalefet — <em>çözüm: veri, bilim ve teknoloji.</em>
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#solutions" class="btn btn-primary">
+                Çözümleri Keşfet <span class="arrow">→</span>
+            </a>
+            <a href="#vision" class="btn btn-secondary">
+                Vizyonu Oku
+            </a>
+        </div>
+
+        <div class="hero-scroll">
+            <span>Keşfet</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span class="marquee-item">ŞEFFAFLIK <span class="sep"></span></span>
+            <span class="marquee-item">YAPAY ZEKA <span class="sep"></span></span>
+            <span class="marquee-item">BLOCKCHAIN <span class="sep"></span></span>
+            <span class="marquee-item">AÇIK VERİ <span class="sep"></span></span>
+            <span class="marquee-item">DİJİTAL DEMOKRASİ <span class="sep"></span></span>
+            <span class="marquee-item">AKILLI ŞEHİRLER <span class="sep"></span></span>
+            <span class="marquee-item">YEŞİL ENERJİ <span class="sep"></span></span>
+            <span class="marquee-item">EĞİTİM DEVRİMİ <span class="sep"></span></span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-item">ŞEFFAFLIK <span class="sep"></span></span>
+            <span class="marquee-item">YAPAY ZEKA <span class="sep"></span></span>
+            <span class="marquee-item">BLOCKCHAIN <span class="sep"></span></span>
+            <span class="marquee-item">AÇIK VERİ <span class="sep"></span></span>
+            <span class="marquee-item">DİJİTAL DEMOKRASİ <span class="sep"></span></span>
+            <span class="marquee-item">AKILLI ŞEHİRLER <span class="sep"></span></span>
+            <span class="marquee-item">YEŞİL ENERJİ <span class="sep"></span></span>
+            <span class="marquee-item">EĞİTİM DEVRİMİ <span class="sep"></span></span>
+        </div>
+    </div>
+
+    <!-- VISION -->
+    <section id="vision">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Vizyon</span>
+                <h2 class="section-title">Neden Buradayız?</h2>
+            </div>
+
+            <div class="vision-grid">
+                <div class="vision-text reveal reveal-delay-1">
+                    <p class="big-quote">
+                        85 milyonun ortak sorunu: <span class="highlight">yetersiz yönetim.</span>
+                        İktidar da muhalefet de çözüm üretemiyor.
+                    </p>
+                    <p>
+                        Peki ya bir ülke; kararlarını veriyle alsa, bütçesini blockchain ile şeffaf yönetse,
+                        eğitim sistemini yapay zeka ile kişiselleştirse, adaleti dijital altyapıyla hızlandırsa?
+                    </p>
+                    <p>
+                        Bu bir hayal değil. Estonya, Singapur, Güney Kore zaten bu yolda.
+                        Türkiye'nin eksik olan tek şey: <strong>iradenin teknolojiyle buluşması.</strong>
+                    </p>
+                    <p>
+                        Kurtuluş, parti değil — bir <strong>vizyon</strong>.
+                        Sağ ya da sol değil — <strong>ileri</strong>.
+                        Slogan değil — <strong>çalışan sistemler</strong>.
+                    </p>
+                </div>
+
+                <div class="vision-stats reveal reveal-delay-2">
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="85">0</span>
+                        <span class="stat-label">Milyon Vatandaş</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="81">0</span>
+                        <span class="stat-label">İl, Tek Platform</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="7">0</span>
+                        <span class="stat-label">Kritik Alan</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="1">0</span>
+                        <span class="stat-label">Ortak Hedef: İleri</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEMS -->
+    <section id="problems">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Sorunlar</span>
+                <h2 class="section-title">Gerçeklerle Yüzleşelim</h2>
+                <p class="section-desc">
+                    Sorunu doğru teşhis etmeden çözüm üretilemez. İşte Türkiye'nin
+                    en kritik yapısal sorunları ve gerçek veriler.
+                </p>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card reveal reveal-delay-1">
+                    <div class="problem-icon">📉</div>
+                    <h3>Ekonomik Kriz</h3>
+                    <div class="problem-stat">↑ Yüksek Enflasyon</div>
+                    <p>
+                        Kronik enflasyon, TL'nin değer kaybı, gelir adaletsizliği ve
+                        orta sınıfın erimesi. Geleneksel politikalar çözüm üretemiyor —
+                        veri odaklı, şeffaf ve öngörülebilir bir ekonomi modeline ihtiyaç var.
+                    </p>
+                </div>
+
+                <div class="problem-card reveal reveal-delay-2">
+                    <div class="problem-icon">🎓</div>
+                    <h3>Eğitim Krizi</h3>
+                    <div class="problem-stat">↓ PISA Ortalaması Altı</div>
+                    <p>
+                        Ezbere dayalı sistem, fırsat eşitsizliği, dijital okuryazarlık eksikliği
+                        ve nitelikli öğretmen açığı. Her çocuğun potansiyeline göre
+                        kişiselleştirilmiş eğitim alabilmesi şart.
+                    </p>
+                </div>
+
+                <div class="problem-card reveal reveal-delay-3">
+                    <div class="problem-icon">🧠</div>
+                    <h3>Beyin Göçü</h3>
+                    <div class="problem-stat">↑ 300K+ Yetişmiş İnsan</div>
+                    <p>
+                        Son yıllarda yüz binlerce mühendis, doktor, akademisyen
+                        ve girişimci yurt dışına göç etti. Yetenekleri kaybetmiyoruz —
+                        onlara layık bir ekosistem sunmakta başarısız oluyoruz.
+                    </p>
+                </div>
+
+                <div class="problem-card reveal reveal-delay-4">
+                    <div class="problem-icon">⚖️</div>
+                    <h3>Adalet Sistemi</h3>
+                    <div class="problem-stat">↓ Güven Endeksi Düşük</div>
+                    <p>
+                        Yavaş işleyen mahkemeler, öngörülemeyen kararlar ve
+                        adalete erişim eşitsizliği. Hızlı, şeffaf ve teknoloji destekli
+                        bir adalet sistemi herkesin hakkı.
+                    </p>
+                </div>
+
+                <div class="problem-card reveal reveal-delay-5">
+                    <div class="problem-icon">🏛️</div>
+                    <h3>Şeffaflık Eksikliği</h3>
+                    <div class="problem-stat">↓ Açık Veri Yetersiz</div>
+                    <p>
+                        Kamu harcamaları takip edilemiyor, ihale süreçleri opak,
+                        karar mekanizmaları kapalı kutu. Vatandaşın her kuruşun
+                        nereye gittiğini gerçek zamanlı görmesi gerekiyor.
+                    </p>
+                </div>
+
+                <div class="problem-card reveal reveal-delay-6">
+                    <div class="problem-icon">🌍</div>
+                    <h3>Çevre ve İklim</h3>
+                    <div class="problem-stat">↑ Karbon Emisyonu</div>
+                    <p>
+                        Hava kirliliği, su kıtlığı riski, kontrolsüz kentleşme ve
+                        yetersiz yenilenebilir enerji yatırımları. Akıllı şehir
+                        teknolojileri ve yeşil enerji dönüşümü acil.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section id="solutions">
+        <div class="container">
+            <div class="solutions-header reveal">
+                <span class="section-label">Çözümler</span>
+                <h2 class="section-title">Teknoloji ile Mümkün</h2>
+                <p class="section-desc">
+                    Her soruna somut, uygulanabilir ve teknoloji destekli çözümler.
+                    Hayal değil — dünyanın başka yerlerinde çalışan sistemler.
+                </p>
+            </div>
+
+            <!-- Solution 1: Open Data -->
+            <div class="solution-item reveal">
+                <div class="solution-content">
+                    <div class="solution-number">01</div>
+                    <h3>Açık Kaynak <span class="accent">Devlet</span></h3>
+                    <p>
+                        Tüm kamu yazılımları açık kaynak. Her vatandaş kodu inceleyebilir,
+                        katkıda bulunabilir. Şeffaflık sadece söz değil — çalışan kod.
+                        Her kuruşun takip edilebildiği gerçek zamanlı bütçe dashboardu.
+                    </p>
+                    <ul class="solution-features">
+                        <li><span class="check">✓</span> Blockchain tabanlı bütçe takibi</li>
+                        <li><span class="check">✓</span> Gerçek zamanlı harcama dashboardu</li>
+                        <li><span class="check">✓</span> Vatandaş denetimi ve geri bildirim</li>
+                        <li><span class="check">✓</span> Akıllı kontratlarla otomatik ihale</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="dashboard-mock">
+                        <div class="dash-header">
+                            <span class="dash-title">🏛️ Kamu Bütçe Paneli</span>
+                            <div class="dash-dots"><span></span><span></span><span></span></div>
+                        </div>
+                        <div class="dash-mini-cards">
+                            <div class="dash-mini-card">
+                                <div class="mini-value" style="color: var(--green);">₺2.4T</div>
+                                <div class="mini-label">Toplam Bütçe</div>
+                            </div>
+                            <div class="dash-mini-card">
+                                <div class="mini-value" style="color: var(--blue);">%94.2</div>
+                                <div class="mini-label">Şeffaflık Oranı</div>
+                            </div>
+                            <div class="dash-mini-card">
+                                <div class="mini-value" style="color: var(--gold);">12.4M</div>
+                                <div class="mini-label">Aktif İzleyici</div>
+                            </div>
+                        </div>
+                        <div class="dash-chart">
+                            <div class="chart-bar" style="height: 60%"></div>
+                            <div class="chart-bar" style="height: 80%"></div>
+                            <div class="chart-bar" style="height: 45%"></div>
+                            <div class="chart-bar" style="height: 90%"></div>
+                            <div class="chart-bar" style="height: 70%"></div>
+                            <div class="chart-bar" style="height: 55%"></div>
+                            <div class="chart-bar" style="height: 85%"></div>
+                            <div class="chart-bar" style="height: 75%"></div>
+                            <div class="chart-bar" style="height: 95%"></div>
+                            <div class="chart-bar" style="height: 65%"></div>
+                            <div class="chart-bar" style="height: 50%"></div>
+                            <div class="chart-bar" style="height: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution 2: AI Policy -->
+            <div class="solution-item reveal">
+                <div class="solution-content">
+                    <div class="solution-number">02</div>
+                    <h3>AI Destekli <span class="accent">Politika Simülasyonu</span></h3>
+                    <p>
+                        Her politika kararı uygulanmadan önce yapay zeka ile simüle edilsin.
+                        Faiz artırımının enflasyona etkisi, vergi değişikliğinin KOBİ'lere
+                        yansıması — hepsi önceden modellensin.
+                    </p>
+                    <ul class="solution-features">
+                        <li><span class="check">✓</span> Makroekonomik simülasyon modeli</li>
+                        <li><span class="check">✓</span> Senaryo bazlı risk analizi</li>
+                        <li><span class="check">✓</span> Gerçek zamanlı ekonomik göstergeler</li>
+                        <li><span class="check">✓</span> Bağımsız AI danışman kurulu</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="solution-visual-inner">
+                        <div class="visual-icon">🤖</div>
+                        <div class="visual-bars">
+                            <div class="visual-bar-label"><span>Enflasyon Tahmini</span><span>%18.5</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill red" data-width="72"></div></div>
+                            <div class="visual-bar-label"><span>İstihdam Etkisi</span><span>+2.3M</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill blue" data-width="85"></div></div>
+                            <div class="visual-bar-label"><span>GSYH Büyüme</span><span>%5.8</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill green" data-width="58"></div></div>
+                            <div class="visual-bar-label"><span>Yatırım Güveni</span><span>78/100</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill purple" data-width="78"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution 3: Education -->
+            <div class="solution-item reveal">
+                <div class="solution-content">
+                    <div class="solution-number">03</div>
+                    <h3>Kişiselleştirilmiş <span class="accent">Eğitim Devrimi</span></h3>
+                    <p>
+                        Her öğrenci kendi hızında, kendi stilinde öğrensin. Yapay zeka,
+                        her çocuğun güçlü ve zayıf yönlerini analiz edip özel müfredat
+                        oluştursun. Coğrafya engel olmasın — her köyde dünya kalitesinde eğitim.
+                    </p>
+                    <ul class="solution-features">
+                        <li><span class="check">✓</span> AI öğrenme asistanı her öğrenciye</li>
+                        <li><span class="check">✓</span> Uyarlanabilir müfredat sistemi</li>
+                        <li><span class="check">✓</span> Sanal laboratuvarlar ve AR deneyimler</li>
+                        <li><span class="check">✓</span> Öğretmen AI copilot desteği</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="solution-visual-inner">
+                        <div class="visual-icon">🎓</div>
+                        <div class="visual-bars">
+                            <div class="visual-bar-label"><span>Okuma Başarısı</span><span>%94</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill blue" data-width="94"></div></div>
+                            <div class="visual-bar-label"><span>Matematik</span><span>%87</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill purple" data-width="87"></div></div>
+                            <div class="visual-bar-label"><span>Kodlama</span><span>%91</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill green" data-width="91"></div></div>
+                            <div class="visual-bar-label"><span>Eleştirel Düşünce</span><span>%83</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill red" data-width="83"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution 4: Digital Justice -->
+            <div class="solution-item reveal">
+                <div class="solution-content">
+                    <div class="solution-number">04</div>
+                    <h3>Dijital <span class="accent">Adalet Sistemi</span></h3>
+                    <p>
+                        Mahkemelerde yıllarca beklemek son bulsun. AI destekli belge
+                        analizi, akıllı duruşma takvimi, blockchain kayıtlar ve vatandaşın
+                        davasını gerçek zamanlı takip edebildiği şeffaf sistem.
+                    </p>
+                    <ul class="solution-features">
+                        <li><span class="check">✓</span> AI destekli hukuk danışmanlığı</li>
+                        <li><span class="check">✓</span> Blockchain tabanlı değiştirilemez kayıtlar</li>
+                        <li><span class="check">✓</span> Dijital arabuluculuk platformu</li>
+                        <li><span class="check">✓</span> Dava süreci %70 daha hızlı</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="solution-visual-inner">
+                        <div class="visual-icon">⚖️</div>
+                        <div class="visual-bars">
+                            <div class="visual-bar-label"><span>Dava Çözüm Hızı</span><span>4x</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill green" data-width="90"></div></div>
+                            <div class="visual-bar-label"><span>Vatandaş Memnuniyeti</span><span>%88</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill blue" data-width="88"></div></div>
+                            <div class="visual-bar-label"><span>Dijitalleşme Oranı</span><span>%95</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill purple" data-width="95"></div></div>
+                            <div class="visual-bar-label"><span>Erişilebilirlik</span><span>81 İl</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill red" data-width="100"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution 5: Smart Cities -->
+            <div class="solution-item reveal">
+                <div class="solution-content">
+                    <div class="solution-number">05</div>
+                    <h3>Akıllı Şehirler & <span class="accent">Yeşil Dönüşüm</span></h3>
+                    <p>
+                        IoT sensörleri ile trafiği yönet, hava kalitesini izle,
+                        enerjiyi optimize et. Her şehir bir "akıllı organizma" olsun.
+                        %100 yenilenebilir enerjiye geçiş planı ile karbon nötr Türkiye.
+                    </p>
+                    <ul class="solution-features">
+                        <li><span class="check">✓</span> IoT sensör ağı tüm şehirlerde</li>
+                        <li><span class="check">✓</span> AI destekli trafik ve ulaşım</li>
+                        <li><span class="check">✓</span> Yenilenebilir enerji altyapısı</li>
+                        <li><span class="check">✓</span> Akıllı atık ve su yönetimi</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="solution-visual-inner">
+                        <div class="visual-icon">🏙️</div>
+                        <div class="visual-bars">
+                            <div class="visual-bar-label"><span>Yenilenebilir Enerji</span><span>%85</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill green" data-width="85"></div></div>
+                            <div class="visual-bar-label"><span>Akıllı Ulaşım</span><span>%92</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill blue" data-width="92"></div></div>
+                            <div class="visual-bar-label"><span>Karbon Azaltımı</span><span>%67</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill purple" data-width="67"></div></div>
+                            <div class="visual-bar-label"><span>Yaşam Kalitesi</span><span>8.4/10</span></div>
+                            <div class="visual-bar"><div class="visual-bar-fill red" data-width="84"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manifesto Banner -->
+            <div class="manifesto-banner reveal">
+                <p class="manifesto-text">
+                    Biz bir parti değiliz. Biz bir <span class="highlight">harekiz</span>.
+                    85 milyon insanın hak ettiği geleceği, teknolojiyle,
+                    veriyle ve <span class="highlight">cesaretle</span> inşa ediyoruz.
+                </p>
+                <p class="manifesto-author">— Kurtuluş Vizyonu</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap">
+        <div class="container">
+            <div class="roadmap-header reveal">
+                <span class="section-label">Yol Haritası</span>
+                <h2 class="section-title">Adım Adım İleri</h2>
+                <p class="section-desc">
+                    Her büyük değişim küçük adımlarla başlar.
+                    İşte Türkiye'nin teknoloji destekli dönüşüm planı.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Faz 1 — Temel</div>
+                        <h3 class="timeline-title">Açık Veri Platformu</h3>
+                        <p class="timeline-desc">
+                            Tüm kamu verilerinin tek platformda toplanması, açık API'ler
+                            ile erişilebilir hale getirilmesi. Vatandaş ve girişimcilere
+                            şeffaf veri erişimi. e-Devlet 2.0 altyapısının kurulması.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Faz 2 — Altyapı</div>
+                        <h3 class="timeline-title">Dijital Altyapı Devrimi</h3>
+                        <p class="timeline-desc">
+                            Ulusal AI altyapısı, veri merkezleri, 5G yaygınlaştırma
+                            ve fiber optik ağın tüm köylere ulaştırılması.
+                            Siber güvenlik kalkanının oluşturulması.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Faz 3 — Uygulama</div>
+                        <h3 class="timeline-title">AI Destekli Yönetişim</h3>
+                        <p class="timeline-desc">
+                            Politika simülasyon sistemi aktif, blockchain bütçe takibi
+                            canlı, dijital adalet sistemi pilot illerde devrede.
+                            Kişiselleştirilmiş eğitim platformu ulusal çapta yaygın.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Faz 4 — Ölçekleme</div>
+                        <h3 class="timeline-title">Akıllı Türkiye</h3>
+                        <p class="timeline-desc">
+                            81 ilde akıllı şehir altyapısı, IoT sensör ağları,
+                            yenilenebilir enerji geçişinin %80'i tamamlanmış.
+                            Beyin göçü tersine dönmüş, startup ekosistemi bölgesel lider.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Faz 5 — Liderlik</div>
+                        <h3 class="timeline-title">Global Teknoloji Lideri</h3>
+                        <p class="timeline-desc">
+                            Türkiye, dijital yönetişimde dünya modeli.
+                            Yapay zeka ihracatçısı, yeşil enerji öncüsü,
+                            eğitim ve adalette global benchmark. Yeni bir çağ.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGY -->
+    <section id="tech">
+        <div class="container">
+            <div class="tech-header reveal">
+                <span class="section-label">Teknoloji Yığını</span>
+                <h2 class="section-title">Hangi Teknolojiler?</h2>
+                <p class="section-desc">
+                    Kurtuluş vizyonu, günümüzün en gelişmiş teknolojileri üzerine inşa edilir.
+                </p>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-card reveal reveal-delay-1">
+                    <span class="tech-icon">🧠</span>
+                    <h3>Yapay Zeka</h3>
+                    <p>LLM'ler, makine öğrenmesi ve derin öğrenme ile politika simülasyonu, kişiselleştirilmiş eğitim ve akıllı yönetişim.</p>
+                </div>
+                <div class="tech-card reveal reveal-delay-2">
+                    <span class="tech-icon">⛓️</span>
+                    <h3>Blockchain</h3>
+                    <p>Değiştirilemez kayıtlar, şeffaf bütçe takibi, akıllı kontratlar ve dijital kimlik altyapısı.</p>
+                </div>
+                <div class="tech-card reveal reveal-delay-3">
+                    <span class="tech-icon">📡</span>
+                    <h3>IoT & Sensörler</h3>
+                    <p>Akıllı şehir altyapısı, çevresel izleme, enerji optimizasyonu ve gerçek zamanlı veri toplama.</p>
+                </div>
+                <div class="tech-card reveal reveal-delay-4">
+                    <span class="tech-icon">☁️</span>
+                    <h3>Bulut & Edge</h3>
+                    <p>Ölçeklenebilir ulusal bulut altyapısı, edge computing ile düşük gecikme ve veri egemenliği.</p>
+                </div>
+                <div class="tech-card reveal reveal-delay-5">
+                    <span class="tech-icon">🔐</span>
+                    <h3>Siber Güvenlik</h3>
+                    <p>Zero-trust mimarisi, quantum-resistant şifreleme ve ulusal siber savunma kalkanı.</p>
+                </div>
+                <div class="tech-card reveal reveal-delay-6">
+                    <span class="tech-icon">📊</span>
+                    <h3>Büyük Veri</h3>
+                    <p>Gerçek zamanlı analitik, veri gölü mimarisi ve evidence-based politika üretimi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+        <div class="container">
+            <div class="cta-inner reveal">
+                <span class="section-label">Harekete Geç</span>
+                <h2 class="cta-title">
+                    Bu Vizyon<br>
+                    <span class="gradient-text">Hepimizin.</span>
+                </h2>
+                <p class="cta-desc">
+                    Değişim yukarıdan gelmez — tabandan yükselir.
+                    Her paylaşım, her konuşma, her satır kod bu hareketi büyütür.
+                    Geleceği birlikte inşa edelim.
+                </p>
+                <div class="cta-actions">
+                    <a href="https://github.com/DevKursat/kurtulus" target="_blank" class="btn btn-primary">
+                        ⭐ GitHub'da Yıldızla
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=Türkiye%27nin%20kurtuluşu%20teknolojide!%20🇹🇷&url=https://devkursat.github.io/kurtulus/" target="_blank" class="btn btn-secondary">
+                        Paylaş
+                    </a>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/DevKursat/kurtulus" target="_blank" class="social-link">
+                        GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/" target="_blank" class="social-link">
+                        LinkedIn
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=Türkiye%27nin%20kurtuluşu%20teknolojide!%20🇹🇷&url=https://devkursat.github.io/kurtulus/" target="_blank" class="social-link">
+                        Twitter / X
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">KURTULUŞ</span>
+            <span class="footer-text">
+                Yapay zeka ile tasarlandı. İnsanlık için inşa edildi. 🇹🇷
+            </span>
+            <div class="footer-links">
+                <a href="https://github.com/DevKursat/kurtulus" target="_blank">GitHub</a>
+                <a href="#hero">Başa Dön ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 1200);
+        });
+
+        // ===== PARTICLE SYSTEM =====
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.color = ['rgba(227,10,23,', 'rgba(0,161,222,', 'rgba(139,92,246,'][Math.floor(Math.random() * 3)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse interaction
+                if (mouse.x !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150;
+                        this.x -= dx * force * 0.01;
+                        this.y -= dy * force * 0.01;
+                    }
+                }
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.opacity + ')';
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        const particleCount = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 15000));
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        const opacity = (1 - dist / 120) * 0.15;
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(227, 10, 23, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            animationId = requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ===== NAVIGATION =====
+        const nav = document.getElementById('navbar');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ===== SCROLL PROGRESS =====
+        const progressBar = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== COUNTER ANIMATION =====
+        const counters = document.querySelectorAll('.stat-number[data-target]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.getAttribute('data-target'));
+                    animateCounter(entry.target, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => counterObserver.observe(c));
+
+        function animateCounter(el, target) {
+            let current = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = Math.floor(current);
+            }, 25);
+        }
+
+        // ===== PROGRESS BARS =====
+        const bars = document.querySelectorAll('.visual-bar-fill[data-width]');
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.getAttribute('data-width');
+                    setTimeout(() => {
+                        entry.target.style.width = width + '%';
+                    }, 300);
+                    barObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        bars.forEach(b => barObserver.observe(b));
+
+        // ===== SMOOTH ANCHOR SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== TILT EFFECT ON CARDS =====
+        const cards = document.querySelectorAll('.problem-card, .tech-card, .stat-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // ===== PARALLAX ON ORBS =====
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const orbs = document.querySelectorAll('.hero-orb');
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 0.05;
+                orb.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // Performance: Reduce particles when not in hero
+        let isHeroVisible = true;
+        const heroObserver = new IntersectionObserver((entries) => {
+            isHeroVisible = entries[0].isIntersecting;
+            if (!isHeroVisible) {
+                canvas.style.opacity = '0.3';
+            } else {
+                canvas.style.opacity = '1';
+            }
+        }, { threshold: 0 });
+        heroObserver.observe(document.getElementById('hero'));
+
+    })();
+    </script>
+</body>
+</html>
